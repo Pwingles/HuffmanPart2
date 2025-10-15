@@ -5,6 +5,10 @@
 #ifndef PRIORITYQUEUE_H
 #define PRIORITYQUEUE_H
 
+#pragma once
+#include <vector>
+#include <iostream>
+#include "TreeNode.h"
 
 
 class PriorityQueue {
