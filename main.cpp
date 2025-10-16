@@ -85,6 +85,29 @@ int main(int argc, char* argv[]) {
     BinSearchTree bst;
     bst.bulkInsert(tokens);
 
+    //test countOf, and contains
+    if (bst.contains("the")) {
+        std::cout << "The word 'the' is in the tree.\n";
+
+        // Access the count using .value().
+        auto wordCount = bst.countOf("the").value();
+        std::cout << "The word 'the' appears " << wordCount << " times.\n";
+    }
+    else
+        std::cout << "The word 'the' is NOT in the tree.\n";
+
+
+    // In-order traversal to collect words and counts
+    std::vector<std::pair<std::string, int>> wordCounts;
+    // Should be sorted alphabetically
+    bst.inorderCollect(wordCounts);
+    // Print out first 15 words to make sure it works.
+    for (int i = 0; i < 15; ++i) {
+        std::cout << wordCounts[i].first << " " << wordCounts[i].second << "\n";
+    }
+
+
+
 
 
 

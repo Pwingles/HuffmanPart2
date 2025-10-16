@@ -66,7 +66,7 @@ std::optional<int> BinSearchTree::countOf(std::string_view word) const noexcept 
 }
 
 void BinSearchTree::inorderCollect(std::vector<std::pair<std::string, int>>& out) const {
-    // TODO
+    inorderHelper(root_, out);
 }
 
 std::size_t BinSearchTree::size() const noexcept {
@@ -143,9 +143,28 @@ const TreeNode* BinSearchTree::findNode(const TreeNode* node, std::string_view w
     }
 }
 
+
+
+
+
+
+// Format L v R where v will be the nodes value
 void BinSearchTree::inorderHelper(const TreeNode* node,
                                   std::vector<std::pair<std::string, int>>& out) {
-    // TODO
+
+    // Null
+    if (node == nullptr) {
+        return;
+    }
+    // L: Traverse left subtree
+    inorderHelper(node->left, out);
+
+    // v: Visit node
+    out.emplace_back(node->word, node->count); // clion recommended emplace_back vs push_back
+
+    // R: Traverse right subtree
+    inorderHelper(node->right, out);
+
 }
 
 std::size_t BinSearchTree::sizeHelper(const TreeNode* node) noexcept {
