@@ -59,12 +59,6 @@ int main(int argc, char* argv[]) {
         exitOnError(st, tokensPath.string());
 
 
-    // Output testing PART 1 of program
-    std::cout << "Tokenization complete. " << words.size() << " tokens found.\n";
-    std::cout << "Tokens written to: " << tokensPath << "\n";
-    std::cout << "----------------------------------------\n";
-
-
     // Part 2 TESTING
     // Testing BinSearchTree Function
     std::vector<std::string> tokens; // holds tokens
@@ -85,7 +79,47 @@ int main(int argc, char* argv[]) {
     BinSearchTree bst;
     bst.bulkInsert(tokens);
 
-    //test countOf, and contains
+    // In-order traversal to collect words and counts
+    std::vector<std::pair<std::string, int>> wordCounts;
+    // Should be sorted alphabetically with this call
+    bst.inorderCollect(wordCounts);
+
+
+    // Print out results
+    std::cout << "BST height: " << bst.height() << "\n";
+    std::cout << "BST unique words: " << bst.size() << "\n";
+    std::cout << "Total tokens: " << tokens.size() << "\n";
+
+
+
+
+
+
+
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+/**
+ * OLD Testing code
+ *
+ *
+ *
+*
+    // Output testing PART 1 of program
+    std::cout << "Tokenization complete. " << words.size() << " tokens found.\n";
+    std::cout << "Tokens written to: " << tokensPath << "\n";
+    std::cout << "----------------------------------------\n";
+
+
+ *  //test countOf, and contains
     if (bst.contains("the")) {
         std::cout << "The word 'the' is in the tree.\n";
 
@@ -97,19 +131,12 @@ int main(int argc, char* argv[]) {
         std::cout << "The word 'the' is NOT in the tree.\n";
 
 
-    // In-order traversal to collect words and counts
-    std::vector<std::pair<std::string, int>> wordCounts;
-    // Should be sorted alphabetically
-    bst.inorderCollect(wordCounts);
-    // Print out first 15 words to make sure it works.
+
+// Print out first 15 words to make sure it works.
     for (int i = 0; i < 15; ++i) {
         std::cout << wordCounts[i].first << " " << wordCounts[i].second << "\n";
     }
-
-
-
-
-
-
-    return 0;
-}
+ *
+ *
+ *
+ */
