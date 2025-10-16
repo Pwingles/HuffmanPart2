@@ -13,15 +13,15 @@
 // Hold data for each node in the binary search tree
 
 struct TreeNode {
-    std::string word;
-    int count;
+    std::string key_word;
+    int freq;
     TreeNode* left;
     TreeNode* right;
 
 
     // Constructor Each node is initialized with at least a word.
     TreeNode(const std::string& w)
-    : word(w), count(1), left(nullptr), right(nullptr) {}
+    : key_word(w), freq(1), left(nullptr), right(nullptr) {}
 };
 
 

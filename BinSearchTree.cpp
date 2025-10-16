@@ -59,7 +59,7 @@ bool BinSearchTree::contains(std::string_view word) const noexcept {
 std::optional<int> BinSearchTree::countOf(std::string_view word) const noexcept {
 
     if (contains(word)) {
-        return findNode(root_, word)->count;
+        return findNode(root_, word)->freq;
     }
     return std::nullopt;
 
@@ -102,15 +102,15 @@ TreeNode* BinSearchTree::insertHelper(TreeNode* node, const std::string& word) {
     }
 
     // Compare the word with current node, if less, go left
-    if (word < node->word) {
+    if (word < node->key_word) {
         node->left = insertHelper(node->left, word);
     }
     // Go right if greater
-    else if (word > node->word) {
+    else if (word > node->key_word) {
         node->right = insertHelper(node->right, word);
     }
     else { // If it is equal add to the count
-        node->count++;
+        node->freq++;
     }
 
     return node;
@@ -128,12 +128,12 @@ const TreeNode* BinSearchTree::findNode(const TreeNode* node, std::string_view w
     }
 
     // word found return the node
-    if (word == node->word) {
+    if (word == node->key_word) {
         return node;
     }
 
     // Search left or right based on comparison
-    if (word < node->word) {
+    if (word < node->key_word) {
         return findNode(node->left, word);
     }
     else {
@@ -158,7 +158,7 @@ void BinSearchTree::inorderHelper(const TreeNode* node,
     inorderHelper(node->left, out);
 
     // v: Visit node
-    out.emplace_back(node->word, node->count); // clion recommended emplace_back vs push_back
+    out.emplace_back(node->key_word, node->freq); // clion recommended emplace_back vs push_back
 
     // R: Traverse right subtree
     inorderHelper(node->right, out);

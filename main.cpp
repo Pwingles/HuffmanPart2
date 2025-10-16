@@ -8,6 +8,7 @@
 #include "utils.hpp"
 #include <algorithm>
 #include <random>
+#include <climits> // For INT_MAX
 
 
 int main(int argc, char* argv[]) {
@@ -84,14 +85,21 @@ int main(int argc, char* argv[]) {
     // Should be sorted alphabetically with this call
     bst.inorderCollect(wordCounts);
 
+    // frequency
+    int minFreq = INT_MAX;
+    int maxFreq = 0;
 
+    // Calculate min and max frequency
+    for (const std::pair<std::string, int>& word : wordCounts) {
+        minFreq = std::min(minFreq, word.second);
+        maxFreq = std::max(maxFreq, word.second);
+    }
     // Print out results
     std::cout << "BST height: " << bst.height() << "\n";
     std::cout << "BST unique words: " << bst.size() << "\n";
     std::cout << "Total tokens: " << tokens.size() << "\n";
-
-
-
+    std::cout << "Min frequency: " << minFreq << "\n";
+    std::cout << "Max frequency: " << maxFreq << "\n";
 
 
 
