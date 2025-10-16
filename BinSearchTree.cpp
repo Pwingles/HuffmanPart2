@@ -102,7 +102,7 @@ TreeNode* BinSearchTree::insertHelper(TreeNode* node, const std::string& word) {
         node->left = insertHelper(node->left, word);
     }
     // Go right if greater
-    if (word > node->word) {
+    else if (word > node->word) {
         node->right = insertHelper(node->right, word);
     }
     else { // If it is equal add to the count

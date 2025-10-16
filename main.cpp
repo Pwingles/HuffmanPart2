@@ -3,15 +3,29 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include "BinSearchTree.h"
 #include "Scanner.hpp"
 #include "utils.hpp"
+#include <algorithm>
+#include <random>
+
 
 int main(int argc, char* argv[]) {
+
+    // Command Line check
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <input_output/<base>.txt>\n";
         return 1;
     }
 
+
+    /**
+     * Path setup
+     * inPath: input_output/call_of_the_wild.txt
+     * dir: input_output
+     * base: call_of_the_wild
+     * tokensPath: input_output/call_of_the_wild.tokens
+     */
     namespace fs = std::filesystem;
     const fs::path inPath = argv[1];
 
@@ -22,6 +36,10 @@ int main(int argc, char* argv[]) {
     // Derived file for Part 1 (.tokens)
     const fs::path tokensPath = dir / (base + ".tokens");
 
+
+
+
+    // SAFTEY CHECKS
     // Pre-flight checks using your utils (as your starter did)
     if (error_type st; (st = regularFileExistsAndIsAvailable(inPath.string())) != NO_ERROR)
         exitOnError(st, inPath.string());
@@ -30,7 +48,7 @@ int main(int argc, char* argv[]) {
     if (error_type st; (st = canOpenForWriting(tokensPath.string())) != NO_ERROR)
         exitOnError(st, tokensPath.string());
 
-    // Scan
+    // Scanning and writing
     std::vector<std::string> words;
     Scanner scanner(inPath); // IMPORTANT: pass the INPUT .txt here
 
@@ -40,9 +58,35 @@ int main(int argc, char* argv[]) {
     if (error_type st; (st = writeVectorToFile(tokensPath.string(), words)) != NO_ERROR)
         exitOnError(st, tokensPath.string());
 
-    // Option B (also fine): use Scanner’s overload to write the file directly
-    // if (error_type st; (st = scanner.tokenize(words, tokensPath)) != NO_ERROR)
-    //     exitOnError(st, tokensPath.string());
+
+    // Output testing PART 1 of program
+    std::cout << "Tokenization complete. " << words.size() << " tokens found.\n";
+    std::cout << "Tokens written to: " << tokensPath << "\n";
+    std::cout << "----------------------------------------\n";
+
+
+    // Part 2 TESTING
+    // Testing BinSearchTree Function
+    std::vector<std::string> tokens; // holds tokens
+    std::ifstream inTokens(tokensPath);
+    std::string word;
+
+    // Read in all tokens from the .tokens file and push them into the tokens vector
+    while (inTokens >> word) {
+        tokens.push_back(word);
+    }
+
+    // Shuffle the tokens to simulate random insertion (Used Provided Seed in project spec)
+    constexpr unsigned SEED = 0xC0FFEE;
+    std::mt19937 rng(SEED);
+    std::shuffle(tokens.begin(), tokens.end(), rng);
+
+    // Build the binary search tree
+    BinSearchTree bst;
+    bst.bulkInsert(tokens);
+
+
+
 
     return 0;
 }
