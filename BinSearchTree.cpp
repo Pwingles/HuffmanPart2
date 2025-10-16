@@ -48,15 +48,21 @@ void BinSearchTree::bulkInsert(const std::vector<std::string>& words) {
 
 
 
-
+// return true if found, false if not
 bool BinSearchTree::contains(std::string_view word) const noexcept {
-    // TODO
-    return false;
+    return findNode(root_, word) != nullptr;
 }
 
+
+
+
 std::optional<int> BinSearchTree::countOf(std::string_view word) const noexcept {
-    // TODO
+
+    if (contains(word)) {
+        return findNode(root_, word)->count;
+    }
     return std::nullopt;
+
 }
 
 void BinSearchTree::inorderCollect(std::vector<std::pair<std::string, int>>& out) const {
@@ -112,9 +118,29 @@ TreeNode* BinSearchTree::insertHelper(TreeNode* node, const std::string& word) {
     return node;
 }
 
+
+
+
+
+// Find the node containing 'word' or nullptr if not found
 const TreeNode* BinSearchTree::findNode(const TreeNode* node, std::string_view word) noexcept {
-    // TODO
-    return nullptr;
+
+    if (node == nullptr) {
+        return nullptr; // Not found
+    }
+
+    // word found return the node
+    if (word == node->word) {
+        return node;
+    }
+
+    // Search left or right based on comparison
+    if (word < node->word) {
+        return findNode(node->left, word);
+    }
+    else {
+        return findNode(node->right, word);
+    }
 }
 
 void BinSearchTree::inorderHelper(const TreeNode* node,
