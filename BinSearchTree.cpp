@@ -70,13 +70,11 @@ void BinSearchTree::inorderCollect(std::vector<std::pair<std::string, int>>& out
 }
 
 std::size_t BinSearchTree::size() const noexcept {
-    // TODO
-    return 0;
+    return sizeHelper(root_);
 }
 
 unsigned BinSearchTree::height() const noexcept {
-    // TODO
-    return 0;
+    return heightHelper(root_);
 }
 
 
@@ -168,11 +166,20 @@ void BinSearchTree::inorderHelper(const TreeNode* node,
 }
 
 std::size_t BinSearchTree::sizeHelper(const TreeNode* node) noexcept {
-    // TODO
-    return 0;
+
+    if (node == nullptr) {
+        return 0;
+    }
+    // Add up 1 + left subtree's and right subtree
+    return 1 + sizeHelper(node->left) + sizeHelper(node->right);
 }
 
 unsigned BinSearchTree::heightHelper(const TreeNode* node) noexcept {
-    // TODO
-    return 0;
+
+    if (node == nullptr) {
+        return 0;
+    }
+
+    // Root + the max height of left and right subtree (whichever is taller)
+    return 1 + std::max(heightHelper(node->left), heightHelper(node->right));
 }
